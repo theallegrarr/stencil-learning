@@ -6,6 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface CrudTable {
+    }
+    interface L4Button {
+        "buttonText": string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -22,6 +27,18 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCrudTableElement extends Components.CrudTable, HTMLStencilElement {
+    }
+    var HTMLCrudTableElement: {
+        prototype: HTMLCrudTableElement;
+        new (): HTMLCrudTableElement;
+    };
+    interface HTMLL4ButtonElement extends Components.L4Button, HTMLStencilElement {
+    }
+    var HTMLL4ButtonElement: {
+        prototype: HTMLL4ButtonElement;
+        new (): HTMLL4ButtonElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -29,10 +46,17 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "crud-table": HTMLCrudTableElement;
+        "l4-button": HTMLL4ButtonElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface CrudTable {
+    }
+    interface L4Button {
+        "buttonText"?: string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -48,6 +72,8 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "crud-table": CrudTable;
+        "l4-button": L4Button;
         "my-component": MyComponent;
     }
 }
@@ -55,6 +81,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "crud-table": LocalJSX.CrudTable & JSXBase.HTMLAttributes<HTMLCrudTableElement>;
+            "l4-button": LocalJSX.L4Button & JSXBase.HTMLAttributes<HTMLL4ButtonElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.row:hover {
+  background-color: lightblue;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  margin: 0 0;
+  border: 1px solid #009879;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+input {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+form > button {
+  background-color: #009879; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green */
+}
+
+label {
+  font-family: sans-serif;
+  font-size: 10pt;
+  padding-left: 5px;
+}
+
+td > button {
+  border: none;
+  color: white;
+  background-color: orangered;
+  margin-right: 15px;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-family: sans-serif;
+}
+
+.disabled {
+  background-color: gray;
+}
+.disabled:hover {
+  background-color: gray; /* Darker green */
+}
