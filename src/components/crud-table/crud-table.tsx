@@ -1,4 +1,6 @@
 import { Component, Host, State, h } from '@stencil/core';
+import { userService } from '../../services/UserService';
+import { initFormValue } from '../../utils/utils';
 
 @Component({
   tag: 'crud-table',
@@ -8,21 +10,33 @@ import { Component, Host, State, h } from '@stencil/core';
 export class CrudTable {
   @State() data: any[] = [];
 
-  @State() form: any = { name: '', address: '', age: undefined, level: undefined };
+  @State() form: any = initFormValue;
   @State() isButtonDisabled: boolean = true;
+  @State() loading: boolean = false;
 
-  private save = e => {
+  private save = async e => {
     e.preventDefault();
+    this.loading = true;
     if (!this.form.id) {
-      this.data = [...this.data, { id: this.data.length + 1, ...this.form }];
+      await userService.createUser(this.form, this.onCompleteAPICallback);
     } else {
-      this.data = this.data.map(item => (item.id === this.form.id ? { ...item, ...this.form } : item));
+      await userService.updateUser(this.form.id, this.form, this.onCompleteAPICallback);
     }
-    this.form = {};
+    this.form = initFormValue;
+    this.isButtonDisabled = true;
   };
 
-  private onDelete = id => {
-    this.data = this.data?.filter(item => item.id !== id);
+  private onCompleteAPICallback = (data, error) => {
+    this.loading = false;
+    this.data = data;
+    if (error) {
+      window.alert(error);
+    }
+  };
+
+  private onDelete = async id => {
+    this.loading = true;
+    await userService.deleteUser(id, this.onCompleteAPICallback);
   };
 
   private onEdit = row => {
@@ -41,12 +55,8 @@ export class CrudTable {
     }
   };
 
-  componentWillLoad() {
-    return fetch('http://localhost:3300/users')
-      .then(response => response.json())
-      .then(data => {
-        this.data = data;
-      });
+  async componentWillLoad() {
+    this.data = await userService.getUsers();
   }
 
   render() {
@@ -86,7 +96,7 @@ export class CrudTable {
           <label htmlFor="role">Role</label>
           <input type="text" placeholder="Role" name="role" onInput={this.updateForm} value={this.form.role} />
           <button disabled={this.isButtonDisabled} class={this.isButtonDisabled ? 'disabled' : ''}>
-            Save
+            {this.loading ? <div class="lds-hourglass"></div> : 'Save'}
           </button>
         </form>
       </Host>
